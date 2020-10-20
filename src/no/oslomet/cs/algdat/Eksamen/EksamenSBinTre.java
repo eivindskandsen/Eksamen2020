@@ -24,7 +24,6 @@ public class EksamenSBinTre<T> {
         }
 
 
-
         @Override
         public String toString() {
             return "" + verdi;
@@ -87,29 +86,29 @@ public class EksamenSBinTre<T> {
         // her har jeg kopiert kode fra 5.2.3 a. Som det står i oppgaven
         // Jeg måtte bare sette foreldrenoden lik q
 
-            Objects.requireNonNull(verdi, "Ulovlig med nullverdier!");
+        Objects.requireNonNull(verdi, "Ulovlig med nullverdier!");
 
-            Node<T> p = rot, q = null;               // p starter i roten
-            int cmp = 0;                             // hjelpevariabel
+        Node<T> p = rot, q = null;               // p starter i roten
+        int cmp = 0;                             // hjelpevariabel
 
-            while (p != null)       // fortsetter til p er ute av treet
-            {
-                q = p;                                 // q er forelder til p
-                cmp = comp.compare(verdi,p.verdi);     // bruker komparatoren
-                p = cmp < 0 ? p.venstre : p.høyre;     // flytter p
-            }
-
-            // p er nå null, dvs. ute av treet, q er den siste vi passerte
-
-            p = new Node<>(verdi,q);                   // oppretter en ny node
-
-            if (q == null) rot = p;                  // p blir rotnode
-            else if (cmp < 0) q.venstre = p;         // venstre barn til q
-            else q.høyre = p;                        // høyre barn til q
-
-            antall++;                                // én verdi mer i treet
-            return true;                             // vellykket innlegging
+        while (p != null)       // fortsetter til p er ute av treet
+        {
+            q = p;                                 // q er forelder til p
+            cmp = comp.compare(verdi, p.verdi);     // bruker komparatoren
+            p = cmp < 0 ? p.venstre : p.høyre;     // flytter p
         }
+
+        // p er nå null, dvs. ute av treet, q er den siste vi passerte
+
+        p = new Node<>(verdi, q);                   // oppretter en ny node
+
+        if (q == null) rot = p;                  // p blir rotnode
+        else if (cmp < 0) q.venstre = p;         // venstre barn til q
+        else q.høyre = p;                        // høyre barn til q
+
+        antall++;                                // én verdi mer i treet
+        return true;                             // vellykket innlegging
+    }
 
 
     public boolean fjern(T verdi) {
@@ -121,7 +120,34 @@ public class EksamenSBinTre<T> {
     }
 
     public int antall(T verdi) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+        //prøver meg på nivå traversing
+        int antallTall = 0;
+        ArrayDeque<Node<T>> queue = new ArrayDeque<>();
+
+        queue.addLast(rot);
+
+        while (!queue.isEmpty()) {
+            //tar ut første node
+
+
+            Node<T> tempNode = queue.removeFirst();
+            //legger til tempNode sine barn i køen
+
+            if (tempNode.venstre != null) {
+                queue.addLast(tempNode.venstre);
+            }
+            if (tempNode.høyre != null) {
+                queue.addLast(tempNode.høyre);
+            }
+
+            if (tempNode.verdi == verdi) {
+                antallTall++;
+            }
+
+
+        }
+        return antallTall;
     }
 
     public void nullstill() {
@@ -129,11 +155,52 @@ public class EksamenSBinTre<T> {
     }
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+        // her drev jeg å programmerte litt feil så jeg kopierte litt kode jeg fant fra kompendiummet.
+        //det skulle være lov
+        while (true) {
+            if (p.venstre != null) p = p.venstre;
+            else if (p.høyre != null) p = p.høyre;
+            else return p;
+        }
     }
 
     private static <T> Node<T> nestePostorden(Node<T> p) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+
+        Node<T> tempNode;
+        Node<T> tempForeldre;
+
+        while (true) {
+            if (p.venstre != null) {
+                p = p.venstre;
+            } else if (p.høyre != null) {
+                p = p.høyre;
+            } else {
+                tempNode = p;
+                tempForeldre = p.forelder;
+                break;
+            }
+
+        }
+
+        if(tempForeldre==null){
+            return null;
+        }
+        if (p == tempForeldre.høyre) {
+            return tempForeldre;
+        }
+        if (p == tempForeldre.venstre) {
+            if (tempForeldre.høyre == null) {
+                return tempForeldre;
+            } else if(tempForeldre.høyre!= null) {
+
+                    return førstePostorden(tempForeldre.høyre);
+
+            }
+        }
+
+
     }
 
     public void postorden(Oppgave<? super T> oppgave) {
