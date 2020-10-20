@@ -17,7 +17,8 @@ Se oblig-tekst for alle krav, og husk spesielt på følgende:
 Vi har brukt git til å dokumentere arbeidet vårt. Jeg har 16 commits totalt, og hver logg-melding beskriver det jeg har gjort av endringer.
 
 Jeg har opprettet prosjektet
-og nå rpøver å få bundle til å funke
+og nå prøver å få bundle til å funke
+Test
 
 * Oppgave 1: Løste ved å implementere ...
 * Oppgave 2: ...
