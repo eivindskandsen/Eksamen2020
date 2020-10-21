@@ -170,6 +170,7 @@ public class EksamenSBinTre<T> {
 
         Node<T> tempNode;
         Node<T> tempForeldre;
+        Node<T> tempForeldreHøyre;
 
         while (true) {
             if (p.venstre != null) {
@@ -188,18 +189,24 @@ public class EksamenSBinTre<T> {
             return null;
         }
         if (p == tempForeldre.høyre) {
+            p.forelder=null;
+            tempForeldre.høyre=null;
             return tempForeldre;
         }
         if (p == tempForeldre.venstre) {
             if (tempForeldre.høyre == null) {
+                p.forelder=null;
+                tempForeldre.venstre=null;
                 return tempForeldre;
             } else if(tempForeldre.høyre!= null) {
 
+                    p.forelder=null;
+                    tempForeldre.venstre=null;
                     return førstePostorden(tempForeldre.høyre);
 
             }
         }
-
+        return null;
 
     }
 
