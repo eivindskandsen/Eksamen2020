@@ -108,6 +108,11 @@ public class EksamenSBinTre<T> {
 
         antall++;                                // én verdi mer i treet
         return true;                             // vellykket innlegging
+
+
+
+
+
     }
 
 
@@ -172,27 +177,32 @@ public class EksamenSBinTre<T> {
         Node<T> tempForeldre;
         Node<T> tempForeldreHøyre;
 
+        //finner første node
         while (true) {
             if (p.venstre != null) {
                 p = p.venstre;
             } else if (p.høyre != null) {
                 p = p.høyre;
             } else {
-                tempNode = p;
                 tempForeldre = p.forelder;
                 break;
             }
 
         }
 
+        // om vi er på notroden
         if(tempForeldre==null){
             return null;
         }
+        //om vi er på en høyre node
+        //fjerner noden etterpå
         if (p == tempForeldre.høyre) {
             p.forelder=null;
             tempForeldre.høyre=null;
             return tempForeldre;
         }
+        // om vi er venstre node
+        // fjerner noden etterpå
         if (p == tempForeldre.venstre) {
             if (tempForeldre.høyre == null) {
                 p.forelder=null;
@@ -211,15 +221,39 @@ public class EksamenSBinTre<T> {
     }
 
     public void postorden(Oppgave<? super T> oppgave) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+        Node<T>q=førstePostorden(rot);
+
+
+
+
+        while(q!= null) {
+
+            oppgave.utførOppgave(q.verdi);
+
+            q=nestePostorden(q);
+        }
     }
 
     public void postordenRecursive(Oppgave<? super T> oppgave) {
+
         postordenRecursive(rot, oppgave);
+
+
     }
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+
+        if(p==null){
+            return;
+        }
+
+        postordenRecursive(p.venstre, oppgave);
+
+        postordenRecursive(p.høyre, oppgave);
+
+        oppgave.utførOppgave(p.verdi);
     }
 
     public ArrayList<T> serialize() {
