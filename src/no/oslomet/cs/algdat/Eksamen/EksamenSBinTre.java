@@ -173,9 +173,9 @@ public class EksamenSBinTre<T> {
     private static <T> Node<T> nestePostorden(Node<T> p) {
 
 
-        Node<T> tempNode;
+
         Node<T> tempForeldre;
-        Node<T> tempForeldreHøyre;
+
 
         //finner første node
         while (true) {
@@ -222,9 +222,12 @@ public class EksamenSBinTre<T> {
 
     public void postorden(Oppgave<? super T> oppgave) {
 
+        // finner første postorden
         Node<T> p=førstePostorden(rot);
 
+        //Looper, printer ut og setter p lik nestePostorden av p
         while(p!= null){
+
             oppgave.utførOppgave(p.verdi);
             p=nestePostorden(p);
         }
@@ -238,10 +241,13 @@ public class EksamenSBinTre<T> {
     }
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
+        /*
+        System.out.println(p);
+        System.out.println(p.venstre);
+        System.out.println(p.høyre);
+        System.out.println(p.forelder);
 
-        if(p==null){
-            return;
-        }
+         */
 
         if(p.venstre!= null){
             postordenRecursive(p.venstre, oppgave);
