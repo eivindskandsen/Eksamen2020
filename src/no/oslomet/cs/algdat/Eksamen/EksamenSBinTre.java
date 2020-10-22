@@ -222,16 +222,11 @@ public class EksamenSBinTre<T> {
 
     public void postorden(Oppgave<? super T> oppgave) {
 
-        Node<T>q=førstePostorden(rot);
+        Node<T> p=førstePostorden(rot);
 
-
-
-
-        while(q!= null) {
-
-            oppgave.utførOppgave(q.verdi);
-
-            q=nestePostorden(q);
+        while(p!= null){
+            oppgave.utførOppgave(p.verdi);
+            p=nestePostorden(p);
         }
     }
 
@@ -244,14 +239,16 @@ public class EksamenSBinTre<T> {
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
 
-
         if(p==null){
             return;
         }
 
-        postordenRecursive(p.venstre, oppgave);
-
-        postordenRecursive(p.høyre, oppgave);
+        if(p.venstre!= null){
+            postordenRecursive(p.venstre, oppgave);
+        }
+        if(p.høyre!=null) {
+            postordenRecursive(p.høyre, oppgave);
+        }
 
         oppgave.utførOppgave(p.verdi);
     }
