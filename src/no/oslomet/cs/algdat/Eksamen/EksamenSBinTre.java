@@ -136,6 +136,9 @@ public class EksamenSBinTre<T> {
                 Node<T> b = p.venstre != null ? p.venstre : p.høyre;  // b for barn
                 if (p == rot){
                     rot = b;
+                    if(b!=null) {
+                        b.forelder = null;
+                    }
                 }
                 else if (p == q.venstre) {
                     q.venstre = b;
@@ -343,6 +346,9 @@ public class EksamenSBinTre<T> {
                     Node<T> b = nodeTemp.venstre != null ? nodeTemp.venstre : nodeTemp.høyre;  // b for barn
                     if (nodeTemp == rot){
                         rot = b;
+                        if(b!=null) {
+                            b.forelder = null;
+                        }
                     }
 
                     else if (nodeTemp == q.venstre) {
