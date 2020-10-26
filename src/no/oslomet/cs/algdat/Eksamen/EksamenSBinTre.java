@@ -116,7 +116,7 @@ public class EksamenSBinTre<T> {
     public boolean fjern(T verdi) {
 
         // kopiert kode fra kompendiumet
-        // ordnet foreldre og tilfeller hvor b er null
+        // ordnet foreldre og spesialtilfeller hvor b er null
 
             if (verdi == null) return false;  // treet har ingen nullverdier
 
@@ -188,6 +188,94 @@ public class EksamenSBinTre<T> {
 
     public int fjernAlle(T verdi) {
 
+        // Brukte kode fra kompeniumet, og en deque som jeg traverserer i nivå orden.
+        // Addet q som forelder til tempnode og omgjorde p til tempNode
+        int tempAntall=0;
+        if (antall==0){
+            return tempAntall;
+        }
+        ArrayDeque<Node<T>> queue= new ArrayDeque<>();
+
+        queue.addLast(rot);
+
+        Node<T> nodeTemp;
+
+
+
+
+
+        while(!queue.isEmpty()){
+
+            nodeTemp= queue.removeFirst();
+            if(nodeTemp.venstre!=null){
+                queue.addLast(nodeTemp.venstre);
+            }
+
+            if(nodeTemp.høyre!= null){
+                queue.addLast(nodeTemp.høyre);
+            }
+
+            if(nodeTemp.verdi==verdi){
+                Node<T>q=nodeTemp.forelder;
+
+                if (nodeTemp.venstre == null || nodeTemp.høyre == null)  // Tilfelle 1) og 2)
+                {
+                    Node<T> b = nodeTemp.venstre != null ? nodeTemp.venstre : nodeTemp.høyre;  // b for barn
+                    if (nodeTemp == rot){
+                        rot = b;
+                    }
+
+                    else if (nodeTemp == q.venstre) {
+                        q.venstre = b;
+                        if(b!=null){
+                            b.forelder=q;
+                        }
+                    }
+                    else {
+                        q.høyre = b;
+                        if(b!=null){
+                            b.forelder=q;
+                        }
+
+                    }
+                }
+                else  // Tilfelle 3)
+                {
+                    Node<T> s = nodeTemp, r = nodeTemp.høyre, tNode; // finner neste i inorden
+                    while (r.venstre != null)
+                    {
+                        s = r;    // s er forelder til r
+                        tNode=r.venstre;
+                        r = r.venstre;
+
+                        tNode.forelder=s;
+                    }
+
+                    nodeTemp.verdi = r.verdi;   // kopierer verdien i r til p
+
+                    if (s != nodeTemp){
+                        s.venstre = r.høyre;
+                        tNode=r.høyre;
+                        if(tNode!=null) {
+                            tNode.forelder = s;
+                        }
+                    }
+                    else {
+                        s.høyre = r.høyre;
+                        tNode=r.høyre;
+                        if(tNode!=null) {
+                            tNode.forelder = s;
+                        }
+                    }
+                }
+                System.out.println();
+                antall--;
+                tempAntall++;   // det er nå én node mindre i treet
+
+            }
+
+        }
+        return tempAntall;
     }
 
     public int antall(T verdi) {
@@ -223,7 +311,86 @@ public class EksamenSBinTre<T> {
     }
 
     public void nullstill() {
-        throw new UnsupportedOperationException("Ikke kodet ennå!");
+        ArrayDeque<Node<T>> queue= new ArrayDeque<>();
+        if(rot==null){
+            return;
+        }
+        queue.addLast(rot);
+
+        Node<T> nodeTemp;
+
+
+
+        while(!queue.isEmpty()){
+
+            nodeTemp= queue.removeFirst();
+            if(nodeTemp.venstre!=null){
+                queue.addLast(nodeTemp.venstre);
+            }
+
+            if(nodeTemp.høyre!= null) {
+                queue.addLast(nodeTemp.høyre);
+            }
+                Node<T>q=nodeTemp.forelder;
+
+
+
+                if (nodeTemp.venstre == null || nodeTemp.høyre == null)  // Tilfelle 1) og 2)
+                {
+                    Node<T> b = nodeTemp.venstre != null ? nodeTemp.venstre : nodeTemp.høyre;  // b for barn
+                    if (nodeTemp == rot){
+                        rot = b;
+                    }
+
+                    else if (nodeTemp == q.venstre) {
+                        q.venstre = b;
+                        if(b!=null){
+                            b.forelder=q;
+                        }
+                    }
+                    else {
+                        q.høyre = b;
+                        if(b!=null){
+                            b.forelder=q;
+                        }
+
+                    }
+                }
+                else  // Tilfelle 3)
+                {
+                    Node<T> s = nodeTemp, r = nodeTemp.høyre, tNode; // finner neste i inorden
+                    while (r.venstre != null)
+                    {
+                        s = r;    // s er forelder til r
+                        tNode=r.venstre;
+                        r = r.venstre;
+
+                        tNode.forelder=s;
+                    }
+
+                    nodeTemp.verdi = r.verdi;   // kopierer verdien i r til p
+
+                    if (s != nodeTemp){
+                        s.venstre = r.høyre;
+                        tNode=r.høyre;
+                        if(tNode!=null) {
+                            tNode.forelder = s;
+                        }
+                    }
+                    else {
+                        s.høyre = r.høyre;
+                        tNode=r.høyre;
+                        if(tNode!=null) {
+                            tNode.forelder = s;
+                        }
+                    }
+                }
+
+                antall--;   // det er nå én node mindre i treet
+
+
+            }
+
     }
 
     private static <T> Node<T> førstePostorden(Node<T> p) {
