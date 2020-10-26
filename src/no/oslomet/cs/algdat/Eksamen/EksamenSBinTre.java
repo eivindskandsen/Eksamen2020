@@ -223,6 +223,9 @@ public class EksamenSBinTre<T> {
                     Node<T> b = nodeTemp.venstre != null ? nodeTemp.venstre : nodeTemp.høyre;  // b for barn
                     if (nodeTemp == rot){
                         rot = b;
+                        if(b!=null) {
+                            b.forelder = null;
+                        }
                     }
 
                     else if (nodeTemp == q.venstre) {
