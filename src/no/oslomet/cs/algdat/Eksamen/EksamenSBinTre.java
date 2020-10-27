@@ -118,158 +118,150 @@ public class EksamenSBinTre<T> {
         // kopiert kode fra kompendiumet
         // ordnet foreldre og spesialtilfeller hvor b er null
 
-            if (verdi == null) return false;  // treet har ingen nullverdier
+        if (verdi == null) return false;  // treet har ingen nullverdier
 
-            Node<T> p = rot, q = null;   // q skal være forelder til p
+        Node<T> p = rot, q = null;   // q skal være forelder til p
 
-            while (p != null)            // leter etter verdi
-            {
-                int cmp = comp.compare(verdi,p.verdi);      // sammenligner
-                if (cmp < 0) { q = p; p = p.venstre; }      // går til venstre
-                else if (cmp > 0) { q = p; p = p.høyre; }   // går til høyre
-                else break;    // den søkte verdien ligger i p
-            }
-            if (p == null) return false;   // finner ikke verdi
-
-            if (p.venstre == null || p.høyre == null)  // Tilfelle 1) og 2)
-            {
-                Node<T> b = p.venstre != null ? p.venstre : p.høyre;  // b for barn
-                if (p == rot){
-                    rot = b;
-                    if(b!=null) {
-                        b.forelder = null;
-                    }
-                }
-                else if (p == q.venstre) {
-                    q.venstre = b;
-                    if(b!=null){
-                        b.forelder=q;
-                    }
-                }
-                else {
-                    q.høyre = b;
-                    if(b!=null){
-                        b.forelder=q;
-                    }
-
-                }
-            }
-            else  // Tilfelle 3)
-            {
-                Node<T> s = p, r = p.høyre, tNode; // finner neste i inorden
-                while (r.venstre != null)
-                {
-                    s = r;    // s er forelder til r
-                    tNode=r.venstre;
-                    r = r.venstre;
-
-                    tNode.forelder=s;
-                }
-
-                p.verdi = r.verdi;   // kopierer verdien i r til p
-
-                if (s != p){
-                    s.venstre = r.høyre;
-                    tNode=r.høyre;
-                    if(tNode!=null) {
-                        tNode.forelder = s;
-                    }
-                }
-                else {
-                    s.høyre = r.høyre;
-                    tNode=r.høyre;
-                    if(tNode!=null) {
-                        tNode.forelder = s;
-                    }
-                }
-            }
-
-            antall--;   // det er nå én node mindre i treet
-            return true;
+        while (p != null)            // leter etter verdi
+        {
+            int cmp = comp.compare(verdi, p.verdi);      // sammenligner
+            if (cmp < 0) {
+                q = p;
+                p = p.venstre;
+            }      // går til venstre
+            else if (cmp > 0) {
+                q = p;
+                p = p.høyre;
+            }   // går til høyre
+            else break;    // den søkte verdien ligger i p
         }
+        if (p == null) return false;   // finner ikke verdi
+
+        if (p.venstre == null || p.høyre == null)  // Tilfelle 1) og 2)
+        {
+            Node<T> b = p.venstre != null ? p.venstre : p.høyre;  // b for barn
+            if (p == rot) {
+                rot = b;
+                if (b != null) {
+                    b.forelder = null;
+                }
+            } else if (p == q.venstre) {
+                q.venstre = b;
+                if (b != null) {
+                    b.forelder = q;
+                }
+            } else {
+                q.høyre = b;
+                if (b != null) {
+                    b.forelder = q;
+                }
+
+            }
+        } else  // Tilfelle 3)
+        {
+            Node<T> s = p, r = p.høyre, tNode; // finner neste i inorden
+            while (r.venstre != null) {
+                s = r;    // s er forelder til r
+                tNode = r.venstre;
+                r = r.venstre;
+
+                tNode.forelder = s;
+            }
+
+            p.verdi = r.verdi;   // kopierer verdien i r til p
+
+            if (s != p) {
+                s.venstre = r.høyre;
+                tNode = r.høyre;
+                if (tNode != null) {
+                    tNode.forelder = s;
+                }
+            } else {
+                s.høyre = r.høyre;
+                tNode = r.høyre;
+                if (tNode != null) {
+                    tNode.forelder = s;
+                }
+            }
+        }
+
+        antall--;   // det er nå én node mindre i treet
+        return true;
+    }
 
 
     public int fjernAlle(T verdi) {
 
         // Brukte kode fra kompeniumet, og en deque som jeg traverserer i nivå orden.
         // Addet q som forelder til tempnode og omgjorde p til tempNode
-        int tempAntall=0;
-        if (antall==0){
+        int tempAntall = 0;
+        if (antall == 0) {
             return tempAntall;
         }
-        ArrayDeque<Node<T>> queue= new ArrayDeque<>();
+        ArrayDeque<Node<T>> queue = new ArrayDeque<>();
 
         queue.addLast(rot);
 
         Node<T> nodeTemp;
 
 
+        while (!queue.isEmpty()) {
 
-
-
-        while(!queue.isEmpty()){
-
-            nodeTemp= queue.removeFirst();
-            if(nodeTemp.venstre!=null){
+            nodeTemp = queue.removeFirst();
+            if (nodeTemp.venstre != null) {
                 queue.addLast(nodeTemp.venstre);
             }
 
-            if(nodeTemp.høyre!= null){
+            if (nodeTemp.høyre != null) {
                 queue.addLast(nodeTemp.høyre);
             }
 
-            if(nodeTemp.verdi==verdi){
-                Node<T>q=nodeTemp.forelder;
+            if (nodeTemp.verdi == verdi) {
+                Node<T> q = nodeTemp.forelder;
 
                 if (nodeTemp.venstre == null || nodeTemp.høyre == null)  // Tilfelle 1) og 2)
                 {
                     Node<T> b = nodeTemp.venstre != null ? nodeTemp.venstre : nodeTemp.høyre;  // b for barn
-                    if (nodeTemp == rot){
+                    if (nodeTemp == rot) {
                         rot = b;
-                        if(b!=null) {
+                        if (b != null) {
                             b.forelder = null;
                         }
-                    }
-
-                    else if (nodeTemp == q.venstre) {
+                    } else if (nodeTemp == q.venstre) {
                         q.venstre = b;
-                        if(b!=null){
-                            b.forelder=q;
+                        if (b != null) {
+                            b.forelder = q;
                         }
-                    }
-                    else {
+                    } else {
                         q.høyre = b;
-                        if(b!=null){
-                            b.forelder=q;
+                        if (b != null) {
+                            b.forelder = q;
                         }
 
                     }
-                }
-                else  // Tilfelle 3)
+                } else  // Tilfelle 3)
                 {
                     Node<T> s = nodeTemp, r = nodeTemp.høyre, tNode; // finner neste i inorden
-                    while (r.venstre != null)
-                    {
+                    while (r.venstre != null) {
                         s = r;    // s er forelder til r
-                        tNode=r.venstre;
+                        tNode = r.venstre;
                         r = r.venstre;
 
-                        tNode.forelder=s;
+                        tNode.forelder = s;
                     }
 
                     nodeTemp.verdi = r.verdi;   // kopierer verdien i r til p
 
-                    if (s != nodeTemp){
+                    if (s != nodeTemp) {
                         s.venstre = r.høyre;
-                        tNode=r.høyre;
-                        if(tNode!=null) {
+                        tNode = r.høyre;
+                        if (tNode != null) {
                             tNode.forelder = s;
                         }
-                    }
-                    else {
+                    } else {
                         s.høyre = r.høyre;
-                        tNode=r.høyre;
-                        if(tNode!=null) {
+                        tNode = r.høyre;
+                        if (tNode != null) {
                             tNode.forelder = s;
                         }
                     }
@@ -286,7 +278,7 @@ public class EksamenSBinTre<T> {
 
     public int antall(T verdi) {
 
-        //prøver meg på nivå traversing
+        // nivå traversing
         int antallTall = 0;
         ArrayDeque<Node<T>> queue = new ArrayDeque<>();
 
@@ -317,8 +309,9 @@ public class EksamenSBinTre<T> {
     }
 
     public void nullstill() {
-        ArrayDeque<Node<T>> queue= new ArrayDeque<>();
-        if(rot==null){
+        ArrayDeque<Node<T>> queue = new ArrayDeque<>();
+
+        if (rot == null) {
             return;
         }
         queue.addLast(rot);
@@ -327,78 +320,71 @@ public class EksamenSBinTre<T> {
 
 
 
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
 
-            nodeTemp= queue.removeFirst();
-            if(nodeTemp.venstre!=null){
+            nodeTemp = queue.removeFirst();
+            if (nodeTemp.venstre != null) {
                 queue.addLast(nodeTemp.venstre);
             }
 
-            if(nodeTemp.høyre!= null) {
+            if (nodeTemp.høyre != null) {
                 queue.addLast(nodeTemp.høyre);
             }
-                Node<T>q=nodeTemp.forelder;
+            Node<T> q = nodeTemp.forelder;
 
 
-
-                if (nodeTemp.venstre == null || nodeTemp.høyre == null)  // Tilfelle 1) og 2)
-                {
-                    Node<T> b = nodeTemp.venstre != null ? nodeTemp.venstre : nodeTemp.høyre;  // b for barn
-                    if (nodeTemp == rot){
-                        rot = b;
-                        if(b!=null) {
-                            b.forelder = null;
-                        }
+            if (nodeTemp.venstre == null || nodeTemp.høyre == null)  // Tilfelle 1) og 2)
+            {
+                Node<T> b = nodeTemp.venstre != null ? nodeTemp.venstre : nodeTemp.høyre;  // b for barn
+                if (nodeTemp == rot) {
+                    rot = b;
+                    if (b != null) {
+                        b.forelder = null;
+                    }
+                } else if (nodeTemp == q.venstre) {
+                    q.venstre = b;
+                    if (b != null) {
+                        b.forelder = q;
+                    }
+                } else {
+                    q.høyre = b;
+                    if (b != null) {
+                        b.forelder = q;
                     }
 
-                    else if (nodeTemp == q.venstre) {
-                        q.venstre = b;
-                        if(b!=null){
-                            b.forelder=q;
-                        }
-                    }
-                    else {
-                        q.høyre = b;
-                        if(b!=null){
-                            b.forelder=q;
-                        }
-
-                    }
                 }
-                else  // Tilfelle 3)
-                {
-                    Node<T> s = nodeTemp, r = nodeTemp.høyre, tNode; // finner neste i inorden
-                    while (r.venstre != null)
-                    {
-                        s = r;    // s er forelder til r
-                        tNode=r.venstre;
-                        r = r.venstre;
+            } else  // Tilfelle 3)
+            {
+                Node<T> s = nodeTemp, r = nodeTemp.høyre, tNode; // finner neste i inorden
+                while (r.venstre != null) {
+                    s = r;    // s er forelder til r
+                    tNode = r.venstre;
+                    r = r.venstre;
 
-                        tNode.forelder=s;
-                    }
-
-                    nodeTemp.verdi = r.verdi;   // kopierer verdien i r til p
-
-                    if (s != nodeTemp){
-                        s.venstre = r.høyre;
-                        tNode=r.høyre;
-                        if(tNode!=null) {
-                            tNode.forelder = s;
-                        }
-                    }
-                    else {
-                        s.høyre = r.høyre;
-                        tNode=r.høyre;
-                        if(tNode!=null) {
-                            tNode.forelder = s;
-                        }
-                    }
+                    tNode.forelder = s;
                 }
 
-                antall--;   // det er nå én node mindre i treet
+                nodeTemp.verdi = r.verdi;   // kopierer verdien i r til p
 
-
+                if (s != nodeTemp) {
+                    s.venstre = r.høyre;
+                    tNode = r.høyre;
+                    if (tNode != null) {
+                        tNode.forelder = s;
+                    }
+                } else {
+                    s.høyre = r.høyre;
+                    tNode = r.høyre;
+                    if (tNode != null) {
+                        tNode.forelder = s;
+                    }
+                }
             }
+
+            antall--;   // det er nå én node mindre i treet
+
+
+        }
 
     }
 
@@ -417,7 +403,6 @@ public class EksamenSBinTre<T> {
 
 
         Node<T> tempForeldre = p.forelder;
-
 
 
         // om vi er på notroden
@@ -469,6 +454,7 @@ public class EksamenSBinTre<T> {
     }
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
+        // Brukte kode fra en forelesningsvideo
 
         if (p == null) {
             return;
@@ -485,25 +471,26 @@ public class EksamenSBinTre<T> {
     }
 
     public ArrayList<T> serialize() {
+
+
         ArrayList<T> a = new ArrayList<>();
 
 
-
-        ArrayDeque<Node<T>> queue=new ArrayDeque<>();
+        ArrayDeque<Node<T>> queue = new ArrayDeque<>();
         queue.addLast(rot);
 
         Node<T> nodeTemp;
 
-        while(!queue.isEmpty()) {
+        while (!queue.isEmpty()) {
 
-            nodeTemp=queue.removeFirst();
+            nodeTemp = queue.removeFirst();
             a.add(nodeTemp.verdi);
 
-            if(nodeTemp.venstre!=null){
+            if (nodeTemp.venstre != null) {
                 queue.addLast(nodeTemp.venstre);
             }
 
-            if(nodeTemp.høyre!= null){
+            if (nodeTemp.høyre != null) {
                 queue.addLast(nodeTemp.høyre);
             }
 
@@ -517,34 +504,12 @@ public class EksamenSBinTre<T> {
     static <K> EksamenSBinTre<K> deserialize(ArrayList<K> data, Comparator<? super K> c) {
 
 
-        EksamenSBinTre<K> binTre= new EksamenSBinTre<>(c);
-
-        /*
-        if(data.get(0)!= null) {
-            binTre.rot = data.get(0);
-        }
-
-        Node<K> p=binTre.rot;
-        Node<K> q=binTre.rot.forelder;
+        EksamenSBinTre<K> binTre = new EksamenSBinTre<>(c);
 
 
-         */
-        for(K value : data){
+        for (K value : data) {
             binTre.leggInn(value);
         }
-
-        /*
-        // kopierte litt kode fra leggInn
-
-        while (p != null)       // fortsetter til p er ute av treet
-        {
-            q = p;                                 // q er forelder til p
-            cmp = c.compare(verdi, p.verdi);     // bruker komparatoren
-            p = cmp < 0 ? p.venstre : p.høyre;     // flytter p
-        }
-
-
-         */
 
         return binTre;
     }
