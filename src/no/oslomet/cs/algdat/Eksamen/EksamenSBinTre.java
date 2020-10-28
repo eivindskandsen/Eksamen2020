@@ -176,16 +176,12 @@ public class EksamenSBinTre<T> {
 
             if (s != p) {
                 s.venstre = r.høyre;
-                tNode = r.høyre;
-                if (tNode != null) {
-                    tNode.forelder = s;
-                }
             } else {
                 s.høyre = r.høyre;
-                tNode = r.høyre;
-                if (tNode != null) {
-                    tNode.forelder = s;
-                }
+            }
+            tNode = r.høyre;
+            if (tNode != null) {
+                tNode.forelder = s;
             }
         }
 
@@ -258,16 +254,12 @@ public class EksamenSBinTre<T> {
 
                     if (s != nodeTemp) {
                         s.venstre = r.høyre;
-                        tNode = r.høyre;
-                        if (tNode != null) {
-                            tNode.forelder = s;
-                        }
                     } else {
                         s.høyre = r.høyre;
-                        tNode = r.høyre;
-                        if (tNode != null) {
-                            tNode.forelder = s;
-                        }
+                    }
+                    tNode = r.høyre;
+                    if (tNode != null) {
+                        tNode.forelder = s;
                     }
                 }
                 System.out.println();
@@ -370,16 +362,12 @@ public class EksamenSBinTre<T> {
 
                 if (s != nodeTemp) {
                     s.venstre = r.høyre;
-                    tNode = r.høyre;
-                    if (tNode != null) {
-                        tNode.forelder = s;
-                    }
                 } else {
                     s.høyre = r.høyre;
-                    tNode = r.høyre;
-                    if (tNode != null) {
-                        tNode.forelder = s;
-                    }
+                }
+                tNode = r.høyre;
+                if (tNode != null) {
+                    tNode.forelder = s;
                 }
             }
 
