@@ -102,9 +102,13 @@ public class EksamenSBinTre<T> {
 
         p = new Node<>(verdi, q);                   // oppretter en ny node
 
-        if (q == null) rot = p;                  // p blir rotnode
-        else if (cmp < 0) q.venstre = p;         // venstre barn til q
-        else q.høyre = p;                        // høyre barn til q
+        if (q == null) {
+            rot = p;                  // p blir rotnode
+        } else if (cmp < 0) {
+            q.venstre = p;         // venstre barn til q
+        } else {
+            q.høyre = p;                        // høyre barn til q
+        }
 
         antall++;                                // én verdi mer i treet
         return true;                             // vellykket innlegging
@@ -278,7 +282,7 @@ public class EksamenSBinTre<T> {
 
     public int antall(T verdi) {
 
-        // nivå traversing
+        //prøver meg på nivå traversing
         int antallTall = 0;
         ArrayDeque<Node<T>> queue = new ArrayDeque<>();
 
@@ -310,14 +314,12 @@ public class EksamenSBinTre<T> {
 
     public void nullstill() {
         ArrayDeque<Node<T>> queue = new ArrayDeque<>();
-
         if (rot == null) {
             return;
         }
         queue.addLast(rot);
 
         Node<T> nodeTemp;
-
 
 
         while (!queue.isEmpty()) {
@@ -421,7 +423,7 @@ public class EksamenSBinTre<T> {
             if (tempForeldre.høyre == null) {
 
                 return tempForeldre;
-            } else if (tempForeldre.høyre != null) {
+            } else {
 
 
                 return førstePostorden(tempForeldre.høyre);
@@ -454,7 +456,6 @@ public class EksamenSBinTre<T> {
     }
 
     private void postordenRecursive(Node<T> p, Oppgave<? super T> oppgave) {
-        // Brukte kode fra en forelesningsvideo
 
         if (p == null) {
             return;
@@ -471,8 +472,6 @@ public class EksamenSBinTre<T> {
     }
 
     public ArrayList<T> serialize() {
-
-
         ArrayList<T> a = new ArrayList<>();
 
 
@@ -506,10 +505,32 @@ public class EksamenSBinTre<T> {
 
         EksamenSBinTre<K> binTre = new EksamenSBinTre<>(c);
 
+        /*
+        if(data.get(0)!= null) {
+            binTre.rot = data.get(0);
+        }
 
+        Node<K> p=binTre.rot;
+        Node<K> q=binTre.rot.forelder;
+
+
+         */
         for (K value : data) {
             binTre.leggInn(value);
         }
+
+        /*
+        // kopierte litt kode fra leggInn
+
+        while (p != null)       // fortsetter til p er ute av treet
+        {
+            q = p;                                 // q er forelder til p
+            cmp = c.compare(verdi, p.verdi);     // bruker komparatoren
+            p = cmp < 0 ? p.venstre : p.høyre;     // flytter p
+        }
+
+
+         */
 
         return binTre;
     }
