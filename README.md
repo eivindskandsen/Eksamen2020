@@ -40,8 +40,8 @@ I tilfelle 3 har p to barn. Vi kopierer koden r til p(neste inorden) og setter p
 
 # Warnings
 
-Non ASCII characters in an adentifier: Her bruker vi æøå
-Privat field endringer is not used: Jeg bruker ikke endringer fordi oppgavene ikke spør om det
-Method inneholder(T verdi) is never used: Jeg har greid å løse oppgavene uten denne
-Duplicated code fragment: Jeg har kopiert kode. Det er spesifert med kommentarer og beskrivelse av oppgaveløsning
+* Non ASCII characters in an adentifier: Her bruker vi æøå
+* Privat field endringer is not used: Jeg bruker ikke endringer fordi oppgavene ikke spør om det
+* Method inneholder(T verdi) is never used: Jeg har greid å løse oppgavene uten denne
+* Duplicated code fragment: Jeg har kopiert kode. Det er spesifert med kommentarer og beskrivelse av oppgaveløsning
 
