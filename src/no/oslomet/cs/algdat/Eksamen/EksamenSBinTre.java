@@ -505,32 +505,12 @@ public class EksamenSBinTre<T> {
 
         EksamenSBinTre<K> binTre = new EksamenSBinTre<>(c);
 
-        /*
-        if(data.get(0)!= null) {
-            binTre.rot = data.get(0);
-        }
 
-        Node<K> p=binTre.rot;
-        Node<K> q=binTre.rot.forelder;
-
-
-         */
         for (K value : data) {
             binTre.leggInn(value);
         }
 
-        /*
-        // kopierte litt kode fra leggInn
 
-        while (p != null)       // fortsetter til p er ute av treet
-        {
-            q = p;                                 // q er forelder til p
-            cmp = c.compare(verdi, p.verdi);     // bruker komparatoren
-            p = cmp < 0 ? p.venstre : p.høyre;     // flytter p
-        }
-
-
-         */
 
         return binTre;
     }
