@@ -29,7 +29,7 @@ foreldrenoden nestePostOrden. Også har vi to alternativer i en venstrenode.
 
 * Oppgave 4: Ble løst ved å finne første postOrden. Deretter går vi inn i en while loop og skriver først ut og finner nestePostOrden. I postOrdeRecursiv burkte jeg kode fra en forelesningsvideo. Vi har et basistilfelle og kall på seg selv og vi skriver ut sist for å få postOrden
 
-*Oppgave 5: Ble løst ved å opprette ett array som jeg skal returnere og en deque. Jeg traverserer i nivå orden og legger hvert element inn i arrayet som jeg returnerer. I deseralize oppretter jeg et objekt av type binærtre<k>. så bruker jeg en for løkke til å legge til dataene fra inputt arrayet inn i binærtreet. Dette går fordi den er generisk.
+* Oppgave 5: Ble løst ved å opprette ett array som jeg skal returnere og en deque. Jeg traverserer i nivå orden og legger hvert element inn i arrayet som jeg returnerer. I deseralize oppretter jeg et objekt av type binærtre<k>. så bruker jeg en for løkke til å legge til dataene fra inputt arrayet inn i binærtreet. Dette går fordi den er generisk.
   
 * Oppgave 6:Her har jeg kopiert kode fra kompendiumet. Jeg setter riktig foreldre node og passer på at jeg håndterer null tilfeller. Jeg gjenbruker fjern koden i de andre metodene i denne oppgaven.I fjernAlle traverserer vi nivåOrden og fjerner noden om verdien matcher. I fjern alle bruker jeg nivåTraversering igjen og gjenbruker koden fra de anre metodene og fjerner en og en node om gangen.
 
